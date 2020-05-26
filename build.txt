@@ -1,0 +1,3 @@
+displayName = Pyresense
+author = Someone
+version = 0.1
