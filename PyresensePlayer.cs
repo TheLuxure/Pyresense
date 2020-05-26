@@ -18,26 +18,26 @@ namespace Pyresense
 	public class PyresensePlayer : ModPlayer
 	{
 		//Debuffs/Buffs
-		public bool cureCurseDebuff;
+		public bool curseCATsCurse;
 
 		public override void ResetEffects() 
 		{
 			//Debuffs/Buffs
-			cureCurseDebuff = false;
+			curseCATsCurse = false;
 		}
 
 		public override void UpdateDead() {
-			cureCurseDebuff = false;
+			curseCATsCurse = false;
 		}
 
 		public override void UpdateBadLifeRegen() {
-			/*if (cureCurseDebuff) {
+			if (curseCATsCurse) {
 				if (player.lifeRegen > 0) {
 					player.lifeRegen = 0;
 				}
 				player.lifeRegenTime = 0;
 				player.lifeRegen -= 128;
-			}*/
+			}
 		}
 	}
 }
