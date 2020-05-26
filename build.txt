@@ -1,3 +1,10 @@
 displayName = Pyresense
-author = Someone
-version = 0.1
+author = Catastrophic Astral Tyrant
+version = 1.0.0.0
+
+hideCode = true
+hideResources = true
+includeSource = true
+
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
+includePDB = true
