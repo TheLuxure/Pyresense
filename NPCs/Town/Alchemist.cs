@@ -31,8 +31,8 @@ namespace Pyresense.NPCs.Town
 			NPCID.Sets.AttackFrameCount[npc.type] = 4;
 			NPCID.Sets.DangerDetectRange[npc.type] = 700;
 			NPCID.Sets.AttackType[npc.type] = 0;
-			NPCID.Sets.AttackTime[npc.type] = 90;
-			NPCID.Sets.AttackAverageChance[npc.type] = 30;
+			NPCID.Sets.AttackTime[npc.type] = 45;
+			NPCID.Sets.AttackAverageChance[npc.type] = 15;
 			NPCID.Sets.HatOffsetY[npc.type] = 4;
 		}
 
@@ -110,8 +110,8 @@ namespace Pyresense.NPCs.Town
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2) {
-			button = Language.GetTextValue("LegacyInterface.28");
-			button2 = "Other " + Language.GetTextValue("LegacyInterface.28");
+			button = "Potion-"+ Language.GetTextValue("LegacyInterface.28");
+			button2 = "Random " + Language.GetTextValue("LegacyInterface.28");
 		}
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
 		{
@@ -120,73 +120,101 @@ namespace Pyresense.NPCs.Town
 		}
 		public override void SetupShop(Chest shop, ref int nextSlot) {
 			if (shopRecycle) {
-				shop.item[nextSlot].SetDefaults(31);
-				shop.item[nextSlot].shopCustomPrice = 80;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(126);
-				shop.item[nextSlot].shopCustomPrice = 80;
-				nextSlot++;
-				if (Main.player[Main.myPlayer].ZoneJungle) {
-					shop.item[nextSlot].SetDefaults(1134);
-					shop.item[nextSlot].shopCustomPrice = 160;
+				if (Main.rand.NextBool(3)) {
+					shop.item[nextSlot].SetDefaults(31);
+					shop.item[nextSlot].shopCustomPrice = 80;
 					nextSlot++;
-				}
-				shop.item[nextSlot].SetDefaults(3000);
-				shop.item[nextSlot].shopCustomPrice = 400000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(5);
-				shop.item[nextSlot].shopCustomPrice = 5000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(28);
-				shop.item[nextSlot].shopCustomPrice = 6000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(110);
-				shop.item[nextSlot].shopCustomPrice = 2000;
-				nextSlot++;
-				if (Main.player[Main.myPlayer].ZoneDirtLayerHeight || Main.player[Main.myPlayer].ZoneRockLayerHeight) {
-					shop.item[nextSlot].SetDefaults(188);
-					shop.item[nextSlot].shopCustomPrice = 4000;
+					shop.item[nextSlot].SetDefaults(126);
+					shop.item[nextSlot].shopCustomPrice = 80;
 					nextSlot++;
-					shop.item[nextSlot].SetDefaults(189);
-					shop.item[nextSlot].shopCustomPrice = 1000;
-					nextSlot++;
-				}
-				if (Main.hardMode) {
-					shop.item[nextSlot].SetDefaults(499);
-					shop.item[nextSlot].shopCustomPrice = 20000;
-					nextSlot++;
-					shop.item[nextSlot].SetDefaults(500);
-					shop.item[nextSlot].shopCustomPrice = 20000;
-					nextSlot++;
-					if (NPC.downedMoonlord) {
-						shop.item[nextSlot].SetDefaults(3544);
-						shop.item[nextSlot].shopCustomPrice = 60000;
+					if (Main.player[Main.myPlayer].ZoneJungle) {
+						shop.item[nextSlot].SetDefaults(1134);
+						shop.item[nextSlot].shopCustomPrice = 160;
 						nextSlot++;
 					}
-					shop.item[nextSlot].SetDefaults(2209);
+					shop.item[nextSlot].SetDefaults(3000);
+					shop.item[nextSlot].shopCustomPrice = 400000;
+					nextSlot++;
+					shop.item[nextSlot].SetDefaults(5);
+					shop.item[nextSlot].shopCustomPrice = 5000;
+					nextSlot++;
+					shop.item[nextSlot].SetDefaults(28);
 					shop.item[nextSlot].shopCustomPrice = 6000;
 					nextSlot++;
-					if (Main.bloodMoon) {
-						shop.item[nextSlot].SetDefaults(1353);
-						shop.item[nextSlot].shopCustomPrice = 10000;
+					shop.item[nextSlot].SetDefaults(110);
+					shop.item[nextSlot].shopCustomPrice = 2000;
+					nextSlot++;
+					if (Main.player[Main.myPlayer].ZoneDirtLayerHeight || Main.player[Main.myPlayer].ZoneRockLayerHeight) {
+						shop.item[nextSlot].SetDefaults(188);
+						shop.item[nextSlot].shopCustomPrice = 4000;
 						nextSlot++;
-						shop.item[nextSlot].SetDefaults(1354);
-						shop.item[nextSlot].shopCustomPrice = 10000;
+						shop.item[nextSlot].SetDefaults(189);
+						shop.item[nextSlot].shopCustomPrice = 1000;
 						nextSlot++;
-						shop.item[nextSlot].SetDefaults(1355);
-						shop.item[nextSlot].shopCustomPrice = 10000;
+					}
+					if (Main.hardMode) {
+						shop.item[nextSlot].SetDefaults(499);
+						shop.item[nextSlot].shopCustomPrice = 20000;
 						nextSlot++;
-						shop.item[nextSlot].SetDefaults(1356);
-						shop.item[nextSlot].shopCustomPrice = 10000;
+						shop.item[nextSlot].SetDefaults(500);
+						shop.item[nextSlot].shopCustomPrice = 20000;
 						nextSlot++;
-						shop.item[nextSlot].SetDefaults(1357);
-						shop.item[nextSlot].shopCustomPrice = 10000;
+						if (NPC.downedMoonlord) {
+							shop.item[nextSlot].SetDefaults(3544);
+							shop.item[nextSlot].shopCustomPrice = 60000;
+							nextSlot++;
+						}
+						shop.item[nextSlot].SetDefaults(2209);
+						shop.item[nextSlot].shopCustomPrice = 6000;
 						nextSlot++;
-						shop.item[nextSlot].SetDefaults(1359);
-						shop.item[nextSlot].shopCustomPrice = 10000;
-						nextSlot++;
-						shop.item[nextSlot].SetDefaults(1340);
-						shop.item[nextSlot].shopCustomPrice = 10000;
+						if (Main.bloodMoon) {
+							shop.item[nextSlot].SetDefaults(1353);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+							shop.item[nextSlot].SetDefaults(1354);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+							shop.item[nextSlot].SetDefaults(1355);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+							shop.item[nextSlot].SetDefaults(1356);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+							shop.item[nextSlot].SetDefaults(1357);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+							shop.item[nextSlot].SetDefaults(1359);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+							shop.item[nextSlot].SetDefaults(1340);
+							shop.item[nextSlot].shopCustomPrice = 10000;
+							nextSlot++;
+						}
+					}
+				} else if (Main.rand.NextBool(3)) {
+					shop.item[nextSlot].SetDefaults(1340);
+					shop.item[nextSlot].shopCustomPrice = 10000;
+					nextSlot++;
+				} else {
+					shop.item[nextSlot].SetDefaults(2756);
+					shop.item[nextSlot].shopCustomPrice = 4000;
+					nextSlot++;
+					shop.item[nextSlot].SetDefaults(2350);
+					shop.item[nextSlot].shopCustomPrice = 4000;
+					nextSlot++;
+					shop.item[nextSlot].SetDefaults(2351);
+					shop.item[nextSlot].shopCustomPrice = 4000;
+					nextSlot++;
+					shop.item[nextSlot].SetDefaults(2997);
+					shop.item[nextSlot].shopCustomPrice = 4000;
+					nextSlot++;
+					if (Main.bloodMoon && NPC.downedMoonlord && NPC.downedFishron && NPC.downedPlantBoss && NPC.downedSlimeKing &&
+						NPC.downedMechBossAny && NPC.downedFrost && NPC.downedPirates && NPC.downedClown && NPC.savedTaxCollector
+						&& NPC.savedGoblin && NPC.savedWizard && NPC.savedMech && NPC.savedAngler && NPC.savedStylist && NPC.savedBartender &&
+						WorldGen.crimson && Main.hardMode && Main.expertMode)
+						{
+						shop.item[nextSlot].SetDefaults(678);
+						shop.item[nextSlot].shopCustomPrice = 4000000;
 						nextSlot++;
 					}
 				}
