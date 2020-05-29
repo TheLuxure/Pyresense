@@ -129,11 +129,29 @@ namespace Pyresense.Boss.Pharaoh
                 float tpPosRand2;
                 tpPosRand2 = Main.rand.NextFloat(6);
                 if (tpPosRand2 > 4) {
-                    npc.position = Main.player[npc.target].position + new Vector2(300, 0);
+                    if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(300, 0);
+                    } else if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(400, 0);
+                    } else if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(200, 0);
+                    }
                 } else if (tpPosRand2 > 2) {
-                    npc.position = Main.player[npc.target].position + new Vector2(-300, 0);
+                    if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(-300, 0);
+                    } else if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(-400, 0);
+                    } else if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(-200, 0);
+                    }
                 } else if (tpPosRand2 > 0) {
-                    npc.position = Main.player[npc.target].position + new Vector2(0, -300);
+                    if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(0, -300);
+                    } else if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(0, -400);
+                    } else if (Main.rand.NextBool(5)) {
+                        npc.position = Main.player[npc.target].position + new Vector2(0, -200);
+                    }
                 }
                 ShootProjectile(2);
                 P2 = 0;
