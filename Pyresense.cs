@@ -1,3 +1,7 @@
+using Pyresense.Boss.Pharaoh.Loot;
+using Pyresense.Items.Ammo;
+using Pyresense.Items.Trophy;
+using Pyresense.NPCs.Critters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,6 +82,17 @@ namespace Pyresense
 					Buff_80 = Main.buffTexture[80];
 					Main.buffTexture[80] = GetTexture("Vanilla/Buff_80");
 				}
+			}
+		}
+
+		public override void PostSetupContent() {
+			// Showcases mod support with Boss Checklist without referencing the mod
+			Mod bossChecklist = ModLoader.GetMod("BossChecklist");
+			if (bossChecklist != null) {
+				bossChecklist.Call("AddBoss", 2.6f, ModContent.NPCType<Boss.Pharaoh.Pharaoh>(), this, "Pharaoh", (Func<bool>)(() => PyresenseWorld.downedPharaoh), ModContent.ItemType<SunScorpion_Item>(),
+				new List<int>() { 848, ModContent.ItemType<Items.Trophy.PharaohTrophy>() },
+				new List<int>() { ModContent.ItemType<PharaohBag>(), ModContent.ItemType<PharaohsMedallion>(), ModContent.ItemType<EndlessChlorophytePouch>() },
+				"Find and use a [i:" + ItemType("SunScorpion_Item") + "] in the desert", "<Gilgamesh> Hah! I won!", "Pyresense/NPCs/Slimes/TropicalSlime");
 			}
 		}
 	}

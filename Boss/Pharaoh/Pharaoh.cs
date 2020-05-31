@@ -1,3 +1,4 @@
+using Pyresense.Boss.Pharaoh.Loot;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -266,11 +267,11 @@ namespace Pyresense.Boss.Pharaoh
 
 		public override void NPCLoot() {
 			int choice = Main.rand.Next(10);
-			/*if (choice == 0) {
-				Item.NewItem(npc.getRect(), ItemType<Items.Placeable.AirPlanteraTrophy>());
-			}*/
+			if (choice == 0) {
+				Item.NewItem(npc.getRect(), ItemType<Items.Trophy.PharaohTrophy>());
+			}
 			if (Main.expertMode) {
-				Item.NewItem(npc.getRect(), /*ItemType<Items.Boss.AirPlanteraBag>()*/848);
+				Item.NewItem(npc.getRect(), ItemType<Boss.Pharaoh.Loot.PharaohBag>());
 			}
 			else {
 				choice = Main.rand.Next(7);

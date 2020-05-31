@@ -1,5 +1,4 @@
-﻿using Pyresense.Projectiles.Weapons.Magic;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -13,7 +12,7 @@ namespace Pyresense.Items.Weapons.Magic
 		}
 
 		public override void SetDefaults() {
-			item.CloneDefaults(165);
+			item.CloneDefaults(112);
 			item.damage = 60;
 			item.noMelee = true;
 			item.magic = true;
@@ -26,7 +25,7 @@ namespace Pyresense.Items.Weapons.Magic
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 14f;
 			item.useAnimation = 26;
-			item.shoot = ProjectileType<Projectiles.Weapons.Magic.FireBoltProjectile>();
+			item.shoot = 15;
 			item.value = 20000;
 		}
 	}

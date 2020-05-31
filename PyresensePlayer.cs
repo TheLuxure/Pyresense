@@ -17,11 +17,17 @@ namespace Pyresense
 
 	public class PyresensePlayer : ModPlayer
 	{
+		//Accessories
+		public bool accPharaohsMedallion = false;
+
 		//Debuffs/Buffs
 		public bool curseCATsCurse;
 
 		public override void ResetEffects() 
 		{
+			//Accessories
+			accPharaohsMedallion = false;
+
 			//Debuffs/Buffs
 			curseCATsCurse = false;
 		}
@@ -38,6 +44,10 @@ namespace Pyresense
 				player.lifeRegenTime = 0;
 				player.lifeRegen -= 128;
 			}
+		}
+
+		public override float UseTimeMultiplier(Item item) {
+            return accPharaohsMedallion ? 1f : 1f;
 		}
 	}
 }
