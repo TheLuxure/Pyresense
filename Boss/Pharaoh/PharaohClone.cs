@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Pyresense.Boss.Pharaoh
 {
     [AutoloadBossHead]
-    public class Pharaoh : ModNPC
+    public class PharaohClone : ModNPC
     {
         public float bossPhaseHealth;
         public float P1;
@@ -22,93 +22,56 @@ namespace Pyresense.Boss.Pharaoh
         public bool BP1;
         public bool BP2;
         public bool BP3;
-        public bool BS;
-        public bool BSsummon = false;
-        public bool ClonSummon;
-        public bool ClonsSummon1 = false;
-        public bool ClonsSummon2 = false;
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Pharaoh");
-            Main.npcFrameCount[npc.type] = 18;
+            Main.npcFrameCount[npc.type] = 6;
 	    }
 
 	    public override void SetDefaults() {
      	    npc.aiStyle = 0;  //5 is the flying AI
             npc.lifeMax = 3200;   //boss life
+            npc.life = 1600;
             npc.damage = 26;  //boss damage
             npc.defense = 0;    //boss defense
             npc.knockBackResist = 0f;
             npc.width = 32;
             npc.height = 56;
-            Main.npcFrameCount[npc.type] = 18;    //boss frame/animation 
-            npc.value = Item.buyPrice(0, 30, 0, 0);
+            Main.npcFrameCount[npc.type] = 6;    //boss frame/animation 
+            npc.value = Item.buyPrice(0, 0, 0, 0);
             npc.npcSlots = 1f;
             npc.boss = true;
             npc.lavaImmune = true;
             npc.noGravity = true;
 	        npc.HitSound = SoundID.NPCHit1;
 	        npc.DeathSound = SoundID.NPCDeath2;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/PharaohTheme");
-            musicPriority = MusicPriority.BossHigh;
             npc.netAlways = true;
-        }
-
-        public override void HitEffect(int hitDirection, double damage)
-        {
-            if (BS && npc.life > bossPhaseHealth * 1 && !BSsummon) {
-                NPC.NewNPC((int)npc.position.X, (int)npc.position.Y, mod.NPCType("PharaohsScorpion"));
-                BSsummon = true;
-            }
-            if (BS && npc.life > bossPhaseHealth * 1 && !ClonsSummon1) {
-                NPC.NewNPC((int)npc.position.X, (int)npc.position.Y, mod.NPCType("PharaohClone"));
-                NPC.NewNPC((int)npc.position.X, (int)npc.position.Y, mod.NPCType("PharaohClone"));
-                NPC.NewNPC((int)npc.position.X, (int)npc.position.Y, mod.NPCType("PharaohClone"));
-                ClonsSummon1 = true;
-            }
-            if (BS && npc.life > bossPhaseHealth * 2 && !ClonsSummon2) {
-                NPC.NewNPC((int)npc.position.X, (int)npc.position.Y, mod.NPCType("PharaohClone"));
-                NPC.NewNPC((int)npc.position.X, (int)npc.position.Y, mod.NPCType("PharaohClone"));
-                ClonsSummon2 = true;
-            }
+            npc.dontTakeDamage = true;
         }
 
         public override bool PreAI()
         {            
-            bossPhaseHealth = npc.lifeMax / 3;
+            bossPhaseHealth = npc.lifeMax / 2;
             return base.PreAI();
         }
         public override void AI()
         {
-            if (NPC.AnyNPCs(mod.NPCType("PharaohsScorpion")) || !Main.player[Main.myPlayer].ZoneDesert) {
-                npc.dontTakeDamage = true;
-                npc.lifeMax += 1;
-                npc.life += 1;
-            } else {
-                npc.dontTakeDamage = false;
+            if (!NPC.AnyNPCs(mod.NPCType("Pharaoh"))) {
+                npc.lifeMax = 0;
+                npc.life = 0;
+                npc.damage = 0;
+                npc.defense = 0;
             }
-
-            if (npc.life > bossPhaseHealth * 2) {
+            if (npc.life > bossPhaseHealth * 1) {
                 npc.ai[0] = 1;
                 BP1 = true;
                 BP2 = false;
                 BP3 = false;
-                BS = false;
-                ClonSummon = false;
-            } else if (npc.life > bossPhaseHealth * 1) {
-                npc.ai[0] = 2;
-                BP1 = false;
-                BP2 = true;
-                BP3 = false;
-                BS = true;
-                ClonSummon = false;
             } else if (npc.life > bossPhaseHealth * 0) {
-                npc.ai[0] = 3;
+                npc.ai[0] = 2;
                 BP1 = false;
                 BP2 = false;
                 BP3 = true;
-                BS = false;
-                ClonSummon = true;
             }
 
             if (npc.ai[0] == 1)
@@ -116,10 +79,6 @@ namespace Pyresense.Boss.Pharaoh
                 P1++;
             }
             else if (npc.ai[0] == 2)
-            {
-                P2++;
-            }
-            else if (npc.ai[0] == 3)
             {
                 P3++;
             }
@@ -138,7 +97,6 @@ namespace Pyresense.Boss.Pharaoh
                 } else if (tpPosRand1 > 0) {
                     npc.position = Main.player[npc.target].position + new Vector2(0, -200);
                 }
-                ShootProjectile(1);
                 P1 = 0;
             } else if (P2 >= 75) {
                 npc.TargetClosest(true);
@@ -147,33 +105,32 @@ namespace Pyresense.Boss.Pharaoh
                 float tpPosRand2;
                 tpPosRand2 = Main.rand.NextFloat(6);
                 if (tpPosRand2 > 4) {
-                    if (Main.rand.NextBool(5)) {
+                    if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(300, 0);
-                    } else if (Main.rand.NextBool(5)) {
+                    } else if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(400, 0);
-                    } else if (Main.rand.NextBool(5)) {
+                    } else if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(200, 0);
                     }
                 } else if (tpPosRand2 > 2) {
-                    if (Main.rand.NextBool(5)) {
+                    if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(-300, 0);
-                    } else if (Main.rand.NextBool(5)) {
+                    } else if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(-400, 0);
-                    } else if (Main.rand.NextBool(5)) {
+                    } else if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(-200, 0);
                     }
                 } else if (tpPosRand2 > 0) {
-                    if (Main.rand.NextBool(5)) {
+                    if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(0, -300);
-                    } else if (Main.rand.NextBool(5)) {
+                    } else if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(0, -400);
-                    } else if (Main.rand.NextBool(5)) {
+                    } else if (Main.rand.NextBool(3)) {
                         npc.position = Main.player[npc.target].position + new Vector2(0, -200);
                     }
                 }
-                ShootProjectile(2);
                 P2 = 0;
-            } else if (P3 >= 50) {
+            } else if (P2 >= 50 || P3 >= 50) {
                 npc.TargetClosest(true);
                 Player player = Main.player[npc.target];
 
@@ -276,33 +233,11 @@ namespace Pyresense.Boss.Pharaoh
                         npc.position = Main.player[npc.target].position + new Vector2(0, 200);
                     }
                 }
-                ShootProjectile(3);
+                P2 = 0;
                 P3 = 0;
             }
             base.AI();
         }
-
-		public override void NPCLoot() {
-			int choice = Main.rand.Next(10);
-			if (choice == 0) {
-				Item.NewItem(npc.getRect(), ItemType<Items.Trophy.PharaohTrophy>());
-			}
-			if (Main.expertMode) {
-				Item.NewItem(npc.getRect(), ItemType<Boss.Pharaoh.Loot.PharaohBag>());
-			}
-			else {
-				choice = Main.rand.Next(7);
-				if (choice == 0) {
-					Item.NewItem(npc.getRect(), 848);
-				}
-			}
-	    	if (!PyresenseWorld.downedPharaoh) {
-		    	PyresenseWorld.downedPharaoh = true;
-		    	if (Main.netMode == NetmodeID.Server) {
-			    	NetMessage.SendData(MessageID.WorldData); // Immediately inform clients of new world state.
-				}
-			}
-		}
 
         private const int Frame_P1_1 = 0;
         private const int Frame_P1_2 = 1;
@@ -310,20 +245,6 @@ namespace Pyresense.Boss.Pharaoh
         private const int Frame_P1_4 = 3;
         private const int Frame_P1_5 = 4;
         private const int Frame_P1_6 = 5;
-
-        private const int Frame_P2_1 = 6;
-        private const int Frame_P2_2 = 7;
-        private const int Frame_P2_3 = 8;
-        private const int Frame_P2_4 = 9;
-        private const int Frame_P2_5 = 10;
-        private const int Frame_P2_6 = 11;
-
-        private const int Frame_P3_1 = 12;
-        private const int Frame_P3_2 = 13;
-        private const int Frame_P3_3 = 14;
-        private const int Frame_P3_4 = 15;
-        private const int Frame_P3_5 = 16;
-        private const int Frame_P3_6 = 17;
 
         public override void FindFrame(int frameHeight)
         {
@@ -348,90 +269,21 @@ namespace Pyresense.Boss.Pharaoh
             } else if (BP2 == true) {
                 npc.frameCounter++;
                 if (npc.frameCounter < 5) {
-                    npc.frame.Y = Frame_P2_1 * frameHeight;
+                    npc.frame.Y = Frame_P1_1 * frameHeight;
                 } else if (npc.frameCounter < 10) {
-                    npc.frame.Y = Frame_P2_2 * frameHeight;
+                    npc.frame.Y = Frame_P1_2 * frameHeight;
                 } else if (npc.frameCounter < 15) {
-                    npc.frame.Y = Frame_P2_3 * frameHeight;
+                    npc.frame.Y = Frame_P1_3 * frameHeight;
                 } else if (npc.frameCounter < 20) {
-                    npc.frame.Y = Frame_P2_4 * frameHeight;
+                    npc.frame.Y = Frame_P1_4 * frameHeight;
                 } else if (npc.frameCounter < 25) {
-                    npc.frame.Y = Frame_P2_5 * frameHeight;
+                    npc.frame.Y = Frame_P1_5 * frameHeight;
                 } else if (npc.frameCounter < 30) {
-                    npc.frame.Y = Frame_P2_6 * frameHeight;
-                } else {
-                    npc.frameCounter = 0;
-                }
-            } else if (BP3 == true) {
-                npc.frameCounter++;
-                if (npc.frameCounter < 5) {
-                    npc.frame.Y = Frame_P3_1 * frameHeight;
-                } else if (npc.frameCounter < 10) {
-                    npc.frame.Y = Frame_P3_2 * frameHeight;
-                } else if (npc.frameCounter < 15) {
-                    npc.frame.Y = Frame_P3_3 * frameHeight;
-                } else if (npc.frameCounter < 20) {
-                    npc.frame.Y = Frame_P3_4 * frameHeight;
-                } else if (npc.frameCounter < 25) {
-                    npc.frame.Y = Frame_P3_5 * frameHeight;
-                } else if (npc.frameCounter < 30) {
-                    npc.frame.Y = Frame_P3_6 * frameHeight;
+                    npc.frame.Y = Frame_P1_6 * frameHeight;
                 } else {
                     npc.frameCounter = 0;
                 }
             }
-            base.FindFrame(frameHeight);
-        }
-
-        public void ShootProjectile(int phase)
-        {
-            //In here, I want to shoot mini life crystals at the player. They will be shooting multiple times, maybe in groups of 3?
-            switch (phase)
-            {
-                case 1:
-                    Projectile.NewProjectile(npc.position + new Vector2(10, 0), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(10, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(0, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, 0), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(-10, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, -10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(0, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    return;
-                case 2:
-                    Projectile.NewProjectile(npc.position + new Vector2(10, -10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(10, 10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, 10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, -10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(10, -10), new Vector2(10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(10, 10), new Vector2(10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, 10), new Vector2(-10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, -10), new Vector2(-10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(-10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(-10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    return;
-                case 3:
-                    Projectile.NewProjectile(npc.position + new Vector2(10, -10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(10, 10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, 10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, -10), new Vector2(0, 0), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(10, -10), new Vector2(10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(10, 10), new Vector2(10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, 10), new Vector2(-10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(-10, -10), new Vector2(-10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(-10, 10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    Projectile.NewProjectile(npc.position + new Vector2(0, 0), new Vector2(-10, -10), ProjectileType<SandBallSmall>(), 100, 1f, npc.whoAmI);
-                    return;
-            }
-        }
-
-        public virtual void ScaleExpertStats (int numPlayers, float bossLifeScale) {
-            npc.lifeMax = (int)(npc.lifeMax * 0.4f * bossLifeScale);
-			npc.damage = (int)(npc.damage * 0.25f);
         }
 	}
 }

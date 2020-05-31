@@ -92,7 +92,7 @@ namespace Pyresense
 				bossChecklist.Call("AddBoss", 2.6f, ModContent.NPCType<Boss.Pharaoh.Pharaoh>(), this, "Pharaoh", (Func<bool>)(() => PyresenseWorld.downedPharaoh), ModContent.ItemType<SunScorpion_Item>(),
 				new List<int>() { 848, ModContent.ItemType<Items.Trophy.PharaohTrophy>() },
 				new List<int>() { ModContent.ItemType<PharaohBag>(), ModContent.ItemType<PharaohsMedallion>(), ModContent.ItemType<EndlessChlorophytePouch>() },
-				"Find and use a [i:" + ItemType("SunScorpion_Item") + "] in the desert", "<Gilgamesh> Hah! I won!", "Pyresense/NPCs/Slimes/TropicalSlime");
+				"Find and use a [i:" + ItemType("SunScorpion_Item") + "] in the desert", "<Gilgamesh> Hah! I won!", "Pyresense/Boss/Pharaoh/PharaohLogo");
 			}
 		}
 	}
