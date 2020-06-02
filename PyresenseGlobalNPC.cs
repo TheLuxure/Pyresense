@@ -16,6 +16,14 @@ namespace Pyresense
 			curseCATsCurse = false;
 		}
 
+		public override void NPCLoot(NPC npc)
+		{
+			if (npc.type == 4 && Main.rand.NextBool(2) && !Main.expertMode)
+			{
+				Item.NewItem(npc.getRect(), ItemType<Items.Weapons.Summon.EyeStaff>());
+			}
+		}
+
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (curseCATsCurse) {
 				if (npc.lifeRegen > 0) {
