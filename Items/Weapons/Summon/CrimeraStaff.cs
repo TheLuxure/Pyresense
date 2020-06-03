@@ -10,16 +10,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Pyresense.Items.Weapons.Summon
 {
-	public class EyeStaff : ModItem
+	public class CrimeraStaff : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Summons eye to fight for you.");
+			DisplayName.SetDefault("Crimera Staff");
+			Tooltip.SetDefault("Summons crimera to fight for you.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; // This lets the player target anywhere on the whole screen while using a controller.
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 
 		public override void SetDefaults() {
-			item.damage = 14;
+			item.damage = 9;
 			item.knockBack = 0f;
 			item.mana = 4;
 			item.width = 32;
@@ -27,13 +28,13 @@ namespace Pyresense.Items.Weapons.Summon
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = 2;
+			item.rare = 1;
 			item.UseSound = SoundID.Item44;
 
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = BuffType<Buffs.Summon.EyeofCthulhuBuff>();
-			item.shoot = ProjectileType<Minions.EyeofCthulhuMinion>();
+			item.buffType = BuffType<Buffs.Summon.CrimeraBuff>();
+			item.shoot = ProjectileType<Minions.CrimeraMinion>();
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {

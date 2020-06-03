@@ -22,6 +22,14 @@ namespace Pyresense
 			{
 				Item.NewItem(npc.getRect(), ItemType<Items.Weapons.Summon.EyeStaff>());
 			}
+			if (npc.type == 6 && Main.rand.NextBool(100))
+			{
+				Item.NewItem(npc.getRect(), ItemType<Items.Weapons.Summon.EaterofSoulStaff>());
+			}
+			if (npc.type == 173 && Main.rand.NextBool(100))
+			{
+				Item.NewItem(npc.getRect(), ItemType<Items.Weapons.Summon.CrimeraStaff>());
+			}
 		}
 
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
