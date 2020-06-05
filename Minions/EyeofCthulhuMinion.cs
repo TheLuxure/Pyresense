@@ -34,7 +34,7 @@ namespace Pyresense.Minions
 
 			projectile.friendly = true;
 			projectile.minion = true;
-			projectile.minionSlots = 1f;
+			projectile.minionSlots = 0.9f;
 			projectile.penetrate = -1;
 		}
 
