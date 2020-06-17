@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Boss",
-    "\\Boss\\Pharaoh"
+    "\\Items",
+    "\\Items\\Weapons",
+    "\\Items\\Weapons\\Summon"
   ],
-  "SelectedNode": "\\Boss\\Pharaoh\\Pharaoh.cs",
+  "SelectedNode": "\\Items\\Weapons\\Summon\\CrimeraStaff.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -20,5 +20,11 @@ namespace Pyresense
         [ReloadRequired]
         [Label("Retexture of Curse's")]
         public bool VanillaDebuffCurseRetexture;
+
+        [DefaultValue(false)]
+        [ReloadRequired]
+        [Label("Thrown damage on thrown items")]
+        [Tooltip("Returned thrown damage (1.4)")]
+        public bool ReturnThrownDamage;
     }
 }

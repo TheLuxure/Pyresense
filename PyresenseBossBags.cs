@@ -48,9 +48,14 @@ namespace Pyresense
 					}
 				}
 			}
-			if (context == "bossBag" && arg == 3319 && Main.expertMode) {
-				if (Main.rand.NextBool(2)) {
-					player.QuickSpawnItem(ItemType<Items.Weapons.Summon.EyeStaff>());
+			if (context == "bossBag" && Main.expertMode) {
+				if (arg == 3319) {
+					if (Main.rand.NextBool(2)) {
+						player.QuickSpawnItem(ItemType<Items.Weapons.Summon.EyeStaff>());
+					}
+				}
+				if (arg == 3330) {
+					player.QuickSpawnItem(ItemType<Items.Souls.SoulofTide>(), Main.rand.Next(25, 40));
 				}
 			}
 		}
