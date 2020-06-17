@@ -1,1 +1,10 @@
-Turquoise (40E0D0) = Post-Moonlord Items [c/40E0D0: ]
+ForestGreen (228B22) = Post-Moonlord Items [c/228B22: ]
+DarkGoldenRod (B8860B) = Post-Moonlord Items [c/B8860B: ]
+DarkCyan (008B8B) = Post-Moonlord Items [c/008B8B: ]
+OrangeRed (FF4500) = Post-Moonlord Items [c/FF4500: ]
+FireBrick (B22222) = Post-Moonlord Items [c/B22222: ]
+MediumVioletRed (C71585) = Post-Moonlord Items [c/C71585: ]
+Indigo (4B0082) = Post-Moonlord Items [c/4B0082: ]
+
+Special rarities
+Aquamarine (7FFFD4) = Specific Items [c/7FFFD4: ]
