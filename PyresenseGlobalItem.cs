@@ -12,6 +12,9 @@ namespace Pyresense
 			if (item.type == 75) {
 				item.maxStack = 999;
 			}
+			if (item.type == 1922) {
+				item.maxStack = 999;
+			}
 			if (ModContent.GetInstance<Config>().ReturnThrownDamage &&
 				/*Before 1.4 (pre-hm)*/ item.type == 3245 || item.type == 3821 || item.type == 949 || item.type == 42 || item.type == 1809 ||
 				item.type == 279 || item.type == 287 || item.type == 1130 || item.type == 3379 || item.type == 1913 || item.type == 161

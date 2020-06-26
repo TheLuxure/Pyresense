@@ -16,11 +16,27 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Pyresense;
+using Terraria.GameContent.UI.Elements;
 
 namespace Pyresense
 {
 	public class Pyresense : Mod
 	{
+		//Skills
+		public int skillMiningLvl;
+		public int skillMiningExp = 0;
+		public int skillMiningLvlMax = 100;
+		public int skillHunterLvl;
+		public int skillHunterExp = 0;
+		public int skillHunterLvlMax = 100;
+		public int skillAdventureLvl;
+		public int skillAdventureExp = 0;
+		public int skillAdventureLvlMax = 100;
+		public int skillButcheryLvl;
+		public int skillButcheryExp = 0;
+		public int skillButcheryLvlMax = 100;
+		
 		//Curse's
 		public static Texture2D Buff_20;
 		public static Texture2D Buff_22;
@@ -39,9 +55,21 @@ namespace Pyresense
 		public static Texture2D Buff_69;
 		public static Texture2D Buff_70;
 		public static Texture2D Buff_80;
+		public static Texture2D NPC_50;
 
-		public override void Load()
-		{
+		public override void PostSetupContent() {
+			// Showcases mod support with Boss Checklist without referencing the mod
+			Mod bossChecklist = ModLoader.GetMod("BossChecklist");
+			if (bossChecklist != null) {
+				bossChecklist.Call("AddBoss", 2.6f, ModContent.NPCType<Boss.Pharaoh.Pharaoh>(), this, "Pharaoh", (Func<bool>)(() => PyresenseWorld.downedPharaoh), ModContent.ItemType<SunScorpion_Item>(),
+				new List<int>() { 848, ModContent.ItemType<Items.Trophy.PharaohTrophy>() },
+				new List<int>() { ModContent.ItemType<PharaohBag>(), ModContent.ItemType<PharaohsMedallion>(), ModContent.ItemType<EndlessChlorophytePouch>() },
+				"Find and use a [i:" + ItemType("SunScorpion_Item") + "] in the desert", "<Gilgamesh> Hah! I won!", "Pyresense/Boss/Pharaoh/PharaohLogo");
+			}
+		}
+
+        public override void Load()
+        {
 			if(!Main.dedServ)
 			{
 				//Curse's
@@ -82,18 +110,13 @@ namespace Pyresense
 					Buff_80 = Main.buffTexture[80];
 					Main.buffTexture[80] = GetTexture("Vanilla/Buff_80");
 				}
+				//King Slime colored
+				if(ModContent.GetInstance<Config>().KingSlimeColored)
+				{
+					NPC_50 = Main.npcTexture[50];
+					Main.npcTexture[50] = GetTexture("Vanilla/NPC_50");
+				}
 			}
 		}
-
-		public override void PostSetupContent() {
-			// Showcases mod support with Boss Checklist without referencing the mod
-			Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-			if (bossChecklist != null) {
-				bossChecklist.Call("AddBoss", 2.6f, ModContent.NPCType<Boss.Pharaoh.Pharaoh>(), this, "Pharaoh", (Func<bool>)(() => PyresenseWorld.downedPharaoh), ModContent.ItemType<SunScorpion_Item>(),
-				new List<int>() { 848, ModContent.ItemType<Items.Trophy.PharaohTrophy>() },
-				new List<int>() { ModContent.ItemType<PharaohBag>(), ModContent.ItemType<PharaohsMedallion>(), ModContent.ItemType<EndlessChlorophytePouch>() },
-				"Find and use a [i:" + ItemType("SunScorpion_Item") + "] in the desert", "<Gilgamesh> Hah! I won!", "Pyresense/Boss/Pharaoh/PharaohLogo");
-			}
-		}
-	}
+    }
 }

@@ -28,7 +28,7 @@ namespace Pyresense.NPCs.Slimes
 			animationType = NPCID.BlueSlime;
 			npc.value = 25;
 			//npc.alpha = 175;
-			npc.scale = 1.25f;
+			npc.scale = 1.125f;
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {

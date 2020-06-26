@@ -26,5 +26,11 @@ namespace Pyresense
         [Label("Thrown damage on thrown items")]
         [Tooltip("Returned thrown damage (1.4)")]
         public bool ReturnThrownDamage;
+
+        [Header("(Experimental) Vanilla Settings")]
+        [DefaultValue(false)]
+        [ReloadRequired]
+        [Label("King Slime can be with different colors")]
+        public bool KingSlimeColored;
     }
 }
