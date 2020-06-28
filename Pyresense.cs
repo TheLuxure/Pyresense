@@ -68,6 +68,22 @@ namespace Pyresense
 			}
 		}
 
+		public override void AddRecipeGroups()
+        {
+            RecipeGroup group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Worm Tooth", new int[]
+            {
+                69,
+				1330
+            });
+			RecipeGroup.RegisterGroup("Pyresense:AnyWormTooth", group);
+			group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Cursed Flame", new int[]
+            {
+                522,
+				1332
+            });
+			RecipeGroup.RegisterGroup("Pyresense:AnyCursedFlame", group);
+		}
+
         public override void Load()
         {
 			if(!Main.dedServ)
